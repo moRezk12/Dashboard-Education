@@ -1,0 +1,9 @@
+/* إخفاء السكروول بار لكل العناصر اللي فيها الكلاس ده */
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hidden {
+  -ms-overflow-style: none; /* لـ Internet Explorer */
+  scrollbar-width: none;    /* لـ Firefox */
+}

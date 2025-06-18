@@ -1,0 +1,105 @@
+<div>
+
+  <!-- Add Chapter Button -->
+  <div class="mb-6 text-left ">
+    <button (click)="openAddModal()" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
+      اضافة شابتر
+    </button>
+  </div>
+
+  <!-- Modal -->
+  <div *ngIf="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div class="bg-white p-8 rounded-2xl shadow-2xl w-[60%] mx-auto relative">
+
+      <div class="flex justify-between items-center mb-4 ">
+        <h2 class="text-xl font-semibold mb-4">{{ mode ? 'تعديل شابتر' : 'اضافة شابتر' }}</h2>
+
+        <div
+          class=" bg-red-500 hover:bg-red-600 text-white w-8 h-8 flex items-center justify-center rounded-full shadow-md cursor-pointer transition-all duration-300"
+          (click)="closeModal()">
+          ✕
+        </div>
+
+      </div>
+
+      <!-- Form with styling and validation -->
+      <form [formGroup]="chapterForm" (ngSubmit)="addOrUpdateChapter()" class="space-y-4">
+
+        <!-- title-->
+        <div class="flex justify-between items-center gap-3"  >
+          <!-- title -->
+          <div class="flex flex-col w-full">
+            <label class="text-[18px] font-medium text-gray-700 mb-1">عنوان الشابتر </label>
+            <input type="text" formControlName="title" placeholder="ادخل عنوان الشابتر"
+              class="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <!-- <small *ngIf="chapterForm.get('title')?.touched && chapterForm.get('title')?.errors?.['required']"
+              class="text-red-500 mt-1">First title is required</small>
+            <small *ngIf="chapterForm.get('title')?.touched && chapterForm.get('title')?.errors?.['minlength']"
+              class="text-red-500 mt-1">First title must be at least {{
+                    chapterForm.get('title')?.errors?.['minlength'].requiredLength }} characters</small> -->
+          </div>
+        </div>
+        <!-- Description -->
+        <div class="flex justify-between items-center gap-3">
+          <!-- First Name -->
+          <div class="flex flex-col w-full">
+            <label class="text-[18px] font-medium text-gray-700 mb-1">وصف الشابتر </label>
+            <input type="text" formControlName="description" placeholder="ادخل وصف الشابتر"
+              class="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <!-- <small *ngIf="chapterForm.get('description')?.touched && chapterForm.get('description')?.errors?.['required']"
+              class="text-red-500 mt-1">First description is required</small>
+            <small *ngIf="chapterForm.get('description')?.touched && chapterForm.get('description')?.errors?.['minlength']"
+              class="text-red-500 mt-1">First description must be at least {{
+                    chapterForm.get('description')?.errors?.['minlength'].requiredLength }} characters</small> -->
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex justify-between mt-4">
+          <button type="submit" [disabled]="chapterForm.invalid" *ngIf="!show"
+            class="bg-green-600 cursor-pointer disabled:hover:bg-green-600 disabled:cursor-not-allowed disabled:opacity-[0.5] text-white w-[40%] px-5 py-2 rounded hover:bg-green-700 transition"
+            (click)="addOrUpdateChapter()">
+            {{ mode ? 'تعديل' : 'اضافة' }}
+          </button>
+          <button type="button" (click)="closeModal()"
+            class="bg-gray-500 cursor-pointer text-white px-5 py-2 rounded hover:bg-gray-600 transition">
+            Cancel
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Chapters Table -->
+  <table class="w-full bg-white shadow rounded overflow-hidden text-center">
+    <thead class="bg-gray-100 text-gray-700">
+      <tr>
+        <th class="py-2 px-4">#</th>
+        <th class="py-2 px-4">عنوان الشابتر</th>
+        <th class="py-2 px-4">وصف الشابتر</th>
+        <th class="py-2 px-4">
+          الاحداث
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let Chapter of Chapters ; trackBy : trackBy ;let i = index" class="border-b">
+        <td class="py-2 px-4 align-middle ">{{ i + 1 }}</td>
+        <td class="py-2 px-4 align-middle ">{{ Chapter.title }}</td>
+        <td class="py-2 px-4 align-middle ">{{ Chapter.description }}</td>
+        <td class="py-3 px-4 text-center align-middle">
+          <div class="flex justify-center items-center ">
+            <button (click)="showChapter(Chapter)"
+              class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">عرض</button>
+            <button (click)="editChapter(Chapter)"
+              class="bg-yellow-400 text-white px-3 py-1 mx-[10px] rounded hover:bg-yellow-500">تعديل</button>
+            <button (click)="deleteChapter(Chapter.id)"
+              class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">حذف</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
