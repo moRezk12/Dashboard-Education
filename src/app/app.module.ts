@@ -53,7 +53,7 @@ import { LessonComponent } from './Components/Dashboard/lesson/lesson.component'
     FormsModule
   ],
   providers: [
-    // { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
     {provide : HTTP_INTERCEPTORS, useClass : AuthInterceptor, multi : true},
     { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true }
   ],
